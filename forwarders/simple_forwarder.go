@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"path"
 	"regexp"
+	"strings"
 	"time"
 
 	log "github.com/Sirupsen/logrus"
@@ -19,13 +20,37 @@ import (
 
 var (
 	alertManager = flag.String("alertmanager", "http://localhost:9093", "Alertmanager host")
+	enableAuth   = flag.Bool("enable-auth", false, "Enable the Authorization HTTP-header for requests to Alertmanager")
+	authFile     = flag.String("auth-file", "authorization_header", "File with the `Authorization` HTTP-header value")
 	regex2xx     = regexp.MustCompile(`^2..`)
 )
 
-type SimpleForwarder struct{}
+type SimpleForwarder struct{
+	enableAuthorization bool
+	authorization       string
+}
 
 func NewSimpleForwarder() *SimpleForwarder {
-	return &SimpleForwarder{}
+	return &SimpleForwarder{
+		enableAuthorization: false,
+		authorization: "",
+	}
+}
+
+func (forwarder *SimpleForwarder) Init() {
+	if *enableAuth {
+		authFileContent, err := ioutil.ReadFile(*authFile)
+		if err != nil {
+			log.Error(err)
+			log.Info("Proceeding without Authorization HTTP-header")
+			forwarder.enableAuthorization = false
+			forwarder.authorization = ""
+			return
+		}
+		log.Info("Enabling authentication with Authorization HTTP-header")
+		forwarder.enableAuthorization = true
+		forwarder.authorization = strings.TrimSpace(string(authFileContent))
+	}
 }
 
 func (forwarder *SimpleForwarder) Send(alerts []prometheus.Alert) {
@@ -50,6 +75,9 @@ func (forwarder *SimpleForwarder) Send(alerts []prometheus.Alert) {
 
 	req, err := http.NewRequest("POST", u.String(), b)
 	req.Header.Set("Content-Type", "application/json")
+	if forwarder.enableAuthorization {
+		req.Header.Set("Authorization", forwarder.authorization)
+	}
 
 	client := &http.Client{}
 	resp, err := client.Do(req)

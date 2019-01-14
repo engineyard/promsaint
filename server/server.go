@@ -33,12 +33,14 @@ type PromsaintServer struct {
 }
 
 func NewPromsaint() *PromsaintServer {
+	forwarder := forwarders.NewSimpleForwarder()
+	forwarder.Init()
 	server := &PromsaintServer{
 		alertChan:     make(chan models.Alert, 100),
 		pruneTicker:   time.NewTicker(*pruneInterval),
 		publishTicker: time.NewTicker(time.Millisecond * 500),
 		backend:       backends.NewBasicBackend(),
-		forwarder:     forwarders.NewSimpleForwarder(),
+		forwarder:     forwarder,
 	}
 	server.receiver = receivers.NewJsonReceiver(server.alertChan)
 	return server

@@ -1,4 +1,4 @@
-FROM golang:1.8.3-alpine
+FROM golang:1.11-alpine
 
 COPY . /go/src/github.com/jfuechsl/promsaint
 
@@ -10,4 +10,4 @@ RUN go install \
 
 USER nobody
 
-ENTRYPOINT ["/run.sh"]
+CMD ["/run.sh"]

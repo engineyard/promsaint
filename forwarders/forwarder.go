@@ -24,5 +24,6 @@ func init() {
 }
 
 type Forwarder interface {
+	Init()
 	Send([]prometheus.Alert)
 }

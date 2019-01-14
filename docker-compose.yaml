@@ -9,6 +9,7 @@ services:
       - ALERTMANAGER=http://alertmanager:9093
       - FORGET_AGE=1m
       - LOG_LEVEL=debug
+      - AUTH_FILE=/tmp/asdf
   alertmanager:
     image: prom/alertmanager
     ports:
