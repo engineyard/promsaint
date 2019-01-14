@@ -13,7 +13,7 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/cloudflare/promsaint/utils"
+	"github.com/jfuechsl/promsaint/utils"
 	prometheus "github.com/prometheus/common/model"
 )
 

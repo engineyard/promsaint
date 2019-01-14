@@ -3,7 +3,7 @@ package utils
 import (
 	"testing"
 
-	"github.com/cloudflare/promsaint/models"
+	"github.com/jfuechsl/promsaint/models"
 )
 
 var testAlert = &models.Alert{

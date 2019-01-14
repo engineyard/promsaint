@@ -3,7 +3,7 @@ package backends
 import (
 	"net/http"
 
-	"github.com/cloudflare/promsaint/models"
+	"github.com/jfuechsl/promsaint/models"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

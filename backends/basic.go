@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/cloudflare/promsaint/models"
-	"github.com/cloudflare/promsaint/utils"
+	"github.com/jfuechsl/promsaint/models"
+	"github.com/jfuechsl/promsaint/utils"
 	log "github.com/Sirupsen/logrus"
 	prometheus "github.com/prometheus/common/model"
 )

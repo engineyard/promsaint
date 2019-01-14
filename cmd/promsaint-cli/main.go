@@ -13,8 +13,8 @@ import (
 	"regexp"
 	"strings"
 
-	_ "github.com/cloudflare/promsaint/logging"
-	"github.com/cloudflare/promsaint/models"
+	_ "github.com/jfuechsl/promsaint/logging"
+	"github.com/jfuechsl/promsaint/models"
 	log "github.com/Sirupsen/logrus"
 )
 

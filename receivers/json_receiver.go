@@ -7,8 +7,8 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 
-	"github.com/cloudflare/promsaint/models"
-	"github.com/cloudflare/promsaint/utils"
+	"github.com/jfuechsl/promsaint/models"
+	"github.com/jfuechsl/promsaint/utils"
 )
 
 // JsonReceiver implements the Receiver interface by providing an HTTP POST
