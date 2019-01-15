@@ -13,7 +13,8 @@ import (
 )
 
 var (
-	generatorUrl = flag.String("generator_url", "https://nagios.example.com/nagios/cgi-bin/status.cgi", "Breakdown Source for nagios")
+	generatorUrl  = flag.String("generator_url", "https://nagios.example.com/nagios/cgi-bin/status.cgi", "Breakdown Source for nagios")
+	customerLabel = flag.String("customer-label", "", "The customer label for the forwarded alerts")
 )
 
 func Key(alert *models.Alert) string {
@@ -74,6 +75,9 @@ func Merge(pAlert *models.InternalAlert, alert *models.Alert) {
 		"alertname": prometheus.LabelValue(alertname),
 		"instance":  prometheus.LabelValue(alert.Host),
 		"notify":    prometheus.LabelValue(strings.Join(notifySlice, " ")),
+	}
+	if *customerLabel != "" {
+		labels["customer"] = prometheus.LabelValue(*customerLabel)
 	}
 
 	annotations := prometheus.LabelSet{}
