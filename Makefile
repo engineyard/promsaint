@@ -11,7 +11,7 @@ all: $(TARGETS)
 .PHONY: $(TARGETS)
 $(TARGETS): .GOPATH/.ok
 $(TARGETS): bin/%:
-	$Q go install $(if $V,-v) $(VERSION_FLAGS) $(IMPORT_PATH)/cmd/$*
+	$Q CGO_ENABLED=0 GOOS=linux go install -a -ldflags '-extldflags "-static"' $(if $V,-v) $(VERSION_FLAGS) $(IMPORT_PATH)/cmd/$*
 
 ##### =====> Utility targets <===== #####
 
