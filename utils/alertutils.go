@@ -73,24 +73,21 @@ func Merge(pAlert *models.InternalAlert, alert *models.Alert) {
 
 	labels := prometheus.LabelSet{
 		"alertname": prometheus.LabelValue(alertname),
-		"instance":  prometheus.LabelValue(alert.Host),
 		"notify":    prometheus.LabelValue(strings.Join(notifySlice, " ")),
 	}
 	if *customerLabel != "" {
 		labels["customer"] = prometheus.LabelValue(*customerLabel)
 	}
 
-	annotations := prometheus.LabelSet{}
+	annotations := prometheus.LabelSet{
+		"location":  prometheus.LabelValue(alert.Host),
+		"component": prometheus.LabelValue(alert.Service),
+		"type":      prometheus.LabelValue(alert.Type),
+		"severity":  prometheus.LabelValue(alert.State),
+		"creator":   prometheus.LabelValue("nagios"),
+	}
 	if alert.Message != "" {
-		annotations["summary"] = prometheus.LabelValue(alert.Message)
-	}
-
-	if alert.State != "" {
-		annotations["state"] = prometheus.LabelValue(alert.State)
-	}
-
-	if alert.NotificationType != "" {
-		annotations["type"] = prometheus.LabelValue(alert.NotificationType)
+		annotations["message"] = prometheus.LabelValue(alert.Message)
 	}
 
 	if alert.Note != "" {
