@@ -129,5 +129,6 @@ func Merge(pAlert *models.InternalAlert, alert *models.Alert) {
 			pAlert.PrometheusAlert.EndsAt = time.Time{}
 		} else {
 			pAlert.PrometheusAlert.EndsAt = pAlert.PrometheusAlert.StartsAt.Add(firingPeriod).Add(11*time.Second)
+		}
 	}
 }
