@@ -85,7 +85,7 @@ func main() {
 		Service:          strings.Replace(*service, " ", "_", -1),
 		Message:          *message,
 		Note:             *note,
-		FiringPeriod      *firingPeriod.String(),
+		FiringPeriod:     *firingPeriod.String(),
 	}
 
 	buff := new(bytes.Buffer)
