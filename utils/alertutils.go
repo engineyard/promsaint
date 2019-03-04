@@ -123,7 +123,7 @@ func Merge(pAlert *models.InternalAlert, alert *models.Alert) {
 	if alert.NotificationType == "RECOVERY" {
 		pAlert.PrometheusAlert.EndsAt = time.Now().UTC()
 	} else {
-		const firingPeriod, err := time.ParseDuration(alert.FiringPeriod)
+		firingPeriod, err := time.ParseDuration(alert.FiringPeriod)
 		if err != nil {
 			log.Error(err)
 			pAlert.PrometheusAlert.EndsAt = time.Time{}
