@@ -123,7 +123,11 @@ func Merge(pAlert *models.InternalAlert, alert *models.Alert) {
 	if alert.NotificationType == "RECOVERY" {
 		pAlert.PrometheusAlert.EndsAt = time.Now().UTC()
 	} else {
-		// Odd case that we have a recovered alert that fires before we do a prune
-		pAlert.PrometheusAlert.EndsAt = time.Time{}
+		const firingPeriod, err := time.ParseDuration(alert.FiringPeriod)
+		if err != nil {
+			log.Error(err)
+			pAlert.PrometheusAlert.EndsAt = time.Time{}
+		} else {
+			pAlert.PrometheusAlert.EndsAt = pAlert.PrometheusAlert.StartsAt.Add(firingPeriod).Add(11*time.Second)
 	}
 }

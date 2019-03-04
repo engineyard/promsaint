@@ -21,6 +21,7 @@ import (
 //     CRITICAL / WARNING / UNKNOWN / OK
 // Message: Optional message
 // Note: Reference URL
+// FiringPeriod: Firing period of the alert
 type Alert struct {
 	Type             string `json:"type"`
 	Host             string `json:"host"`
@@ -30,6 +31,7 @@ type Alert struct {
 	State            string `json:"state"`
 	Message          string `json:"message"`
 	Note             string `json:"note"`
+	FiringPeriod     string `json:"firing-period"`
 }
 
 type AlertMetadata struct {
