@@ -12,6 +12,7 @@ import (
 	"path"
 	"regexp"
 	"strings"
+	"time"
 
 	_ "github.com/jfuechsl/promsaint/logging"
 	"github.com/jfuechsl/promsaint/models"
@@ -30,6 +31,7 @@ var (
 	note             = flag.String("note", "", "Service note (Reference link)")
 	promsaintUrl     = flag.String("promsaint", "http://localhost:8080", "Url of running promsaint Daemon to post to")
 	logFile          = flag.String("log.file", "", "Log all info to file")
+	firingPeriod     = flag.Duration("firing-period", time.Minute*10, "The period in which the alert is expected to fire")
 	versionFlag      = flag.Bool("version", false, "Print version information")
 	regex2xx         = regexp.MustCompile(`^2..`)
 	Version          string
@@ -83,6 +85,7 @@ func main() {
 		Service:          strings.Replace(*service, " ", "_", -1),
 		Message:          *message,
 		Note:             *note,
+		FiringPeriod      *firingPeriod.String(),
 	}
 
 	buff := new(bytes.Buffer)
