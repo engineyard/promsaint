@@ -7,9 +7,9 @@ import (
 	"sync"
 	"time"
 
+	log "github.com/Sirupsen/logrus"
 	"github.com/jfuechsl/promsaint/models"
 	"github.com/jfuechsl/promsaint/utils"
-	log "github.com/Sirupsen/logrus"
 	prometheus "github.com/prometheus/common/model"
 )
 
@@ -85,7 +85,8 @@ func (set *BasicBackend) Prune() {
 		if !value.PrometheusAlert.EndsAt.IsZero() && time.Now().UTC().Sub(value.PrometheusAlert.EndsAt) > *pruneTimeout {
 			DatabasePruned.WithLabelValues("resolved").Inc()
 			delete(set.data, key)
-		} else if time.Now().UTC().Sub(value.Metadata.LastUpdate) > *forgetTimeout {
+		} else if (value.Metadata.DontForgetUntil.IsZero() && time.Since(value.Metadata.LastUpdate) > *forgetTimeout) ||
+			(!value.Metadata.DontForgetUntil.IsZero() && time.Now().UTC().After(value.Metadata.DontForgetUntil)) {
 			DatabasePruned.WithLabelValues("forgotten").Inc()
 			delete(set.data, key)
 		}

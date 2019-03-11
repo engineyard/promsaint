@@ -30,10 +30,12 @@ type Alert struct {
 	State            string `json:"state"`
 	Message          string `json:"message"`
 	Note             string `json:"note"`
+	FirePeriod       string `json:"fire-period"`
 }
 
 type AlertMetadata struct {
-	LastUpdate time.Time
+	LastUpdate      time.Time
+	DontForgetUntil time.Time
 }
 
 type InternalAlert struct {
