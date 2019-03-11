@@ -126,7 +126,8 @@ func Merge(pAlert *models.InternalAlert, alert *models.Alert) {
 	} else {
 		// Odd case that we have a recovered alert that fires before we do a prune
 		pAlert.PrometheusAlert.EndsAt = time.Time{}
-		if firePeriod, err := time.ParseDuration(alert.FirePeriod); err == nil {
+		pAlert.Metadata.DontForgetUntil = time.Time{}
+		if firePeriod, err := time.ParseDuration(alert.FirePeriod); err == nil && firePeriod > 0 {
 			pAlert.Metadata.DontForgetUntil = pAlert.Metadata.LastUpdate.Add(firePeriod)
 		} else {
 			log.Error(err)

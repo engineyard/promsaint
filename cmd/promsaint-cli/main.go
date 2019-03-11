@@ -12,7 +12,6 @@ import (
 	"path"
 	"regexp"
 	"strings"
-	"time"
 
 	log "github.com/Sirupsen/logrus"
 	_ "github.com/jfuechsl/promsaint/logging"
@@ -32,7 +31,7 @@ var (
 	promsaintUrl     = flag.String("promsaint", "http://localhost:8080", "Url of running promsaint Daemon to post to")
 	logFile          = flag.String("log.file", "", "Log all info to file")
 	versionFlag      = flag.Bool("version", false, "Print version information")
-	firePeriod       = flag.Duration("fire-period", 10*time.Minute, "The period in which the alert fires")
+	firePeriod       = flag.Duration("fire-period", 0, "The period in which the alert fires")
 	regex2xx         = regexp.MustCompile(`^2..`)
 	Version          string
 	BuildTime        string
