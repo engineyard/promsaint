@@ -50,8 +50,10 @@ func Merge(pAlert *models.InternalAlert, alert *models.Alert) {
 	var alertname string
 	if alert.Type == "host" {
 		alertname = "Host Down"
-	} else {
+	} else if alert.Type == "service" {
 		alertname = alert.Service
+	} else {
+		alertname = alert.AlertName
 	}
 
 	log.Debugf("NOTIFY: %s -> %s", string(pAlert.PrometheusAlert.Labels["notify"]), alert.Notify)
@@ -104,7 +106,7 @@ func Merge(pAlert *models.InternalAlert, alert *models.Alert) {
 	q := u.Query()
 	if alert.Type == "host" {
 		q.Set("host", alert.Host)
-	} else {
+	} else if alert.Type == "service" {
 		q.Set("servicegroup", alert.Service)
 	}
 	q.Set("style", "detail")

@@ -19,22 +19,24 @@ import (
 )
 
 var (
-	hostAlert        = flag.Bool("hostalert", false, "This is a host alert")
-	serviceAlert     = flag.Bool("servicealert", false, "This is a service alert")
-	notify           = flag.String("notify", "blackhole", "Value of notify label")
-	notificationType = flag.String("ntype", "", "PROBLEM / ACKNOWLEDGEMENT / RECOVERY")
-	state            = flag.String("state", "", "# Host states: #  UP / DOWN # Service states: #  CRITICAL / WARNING / UNKNOWN / OK")
-	host             = flag.String("host", "", "Hostname of firing alert")
-	service          = flag.String("service", "", "Servicename of firing alert")
-	message          = flag.String("msg", "", "Service Output")
-	note             = flag.String("note", "", "Service note (Reference link)")
-	promsaintUrl     = flag.String("promsaint", "http://localhost:8080", "Url of running promsaint Daemon to post to")
-	logFile          = flag.String("log.file", "", "Log all info to file")
-	versionFlag      = flag.Bool("version", false, "Print version information")
-	firePeriod       = flag.Duration("fire-period", 0, "The period in which the alert fires")
-	regex2xx         = regexp.MustCompile(`^2..`)
-	Version          string
-	BuildTime        string
+	hostAlert         = flag.Bool("hostalert", false, "This is a host alert")
+	serviceAlert      = flag.Bool("servicealert", false, "This is a service alert")
+	notify            = flag.String("notify", "blackhole", "Value of notify label")
+	notificationType  = flag.String("ntype", "", "PROBLEM / ACKNOWLEDGEMENT / RECOVERY")
+	state             = flag.String("state", "", "# Host states: #  UP / DOWN # Service states: #  CRITICAL / WARNING / UNKNOWN / OK")
+	host              = flag.String("host", "", "Hostname of firing alert")
+	service           = flag.String("service", "", "Servicename of firing alert")
+	alertTypeOverride = flag.String("alert-type", "", "Alternative alert type")
+	alertName         = flag.String("alert-name", "", "Name of firing alert, when type is not service or host")
+	message           = flag.String("msg", "", "Service Output")
+	note              = flag.String("note", "", "Service note (Reference link)")
+	promsaintUrl      = flag.String("promsaint", "http://localhost:8080", "Url of running promsaint Daemon to post to")
+	logFile           = flag.String("log.file", "", "Log all info to file")
+	versionFlag       = flag.Bool("version", false, "Print version information")
+	firePeriod        = flag.Duration("fire-period", 0, "The period in which the alert fires")
+	regex2xx          = regexp.MustCompile(`^2..`)
+	Version           string
+	BuildTime         string
 )
 
 func main() {
@@ -70,9 +72,11 @@ func main() {
 		logger.Fatal("Only one of -hostalert or -servicealert can be set")
 	}
 
-	alertType := "service"
+	alertType := *alertTypeOverride
 	if *hostAlert {
 		alertType = "host"
+	} else if *serviceAlert {
+		alertType := "service"
 	}
 
 	alert := models.Alert{
@@ -82,6 +86,7 @@ func main() {
 		State:            *state,
 		Host:             *host,
 		Service:          strings.Replace(*service, " ", "_", -1),
+		AlertName:        *alertName,
 		Message:          *message,
 		Note:             *note,
 		FirePeriod:       (*firePeriod).String(),
