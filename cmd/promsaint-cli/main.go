@@ -64,8 +64,16 @@ func main() {
 	})
 
 	// Validate flags
-	if !*hostAlert && !*serviceAlert {
-		logger.Fatal("One of -hostalert or -servicealert must be set")
+	if !*hostAlert && !*serviceAlert && *alertTypeOverride == "" {
+		logger.Fatal("One of -hostalert or -servicealert or -alert-type must be set")
+	}
+
+	if (*hostAlert || *serviceAlert) && *alertTypeOverride != "" {
+		logger.Warn("If one of -hostalert or -servicealert is set, -alert-type is ignored")
+	}
+
+	if *alertTypeOverride != "" && *alertName == "" {
+		logger.Fatal("With -alert-name needs to be set when -alert-type is set")
 	}
 
 	if *hostAlert && *serviceAlert {
