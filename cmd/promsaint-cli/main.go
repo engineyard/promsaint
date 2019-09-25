@@ -73,7 +73,7 @@ func main() {
 	}
 
 	if *alertTypeOverride != "" && *alertName == "" {
-		logger.Fatal("With -alert-name needs to be set when -alert-type is set")
+		logger.Fatal("When -alert-type is set, -alert-name needs to be set as well")
 	}
 
 	if *hostAlert && *serviceAlert {
