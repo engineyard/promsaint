@@ -76,7 +76,7 @@ func main() {
 	if *hostAlert {
 		alertType = "host"
 	} else if *serviceAlert {
-		alertType := "service"
+		alertType = "service"
 	}
 
 	alert := models.Alert{
