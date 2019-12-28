@@ -3,7 +3,7 @@ package backends
 import (
 	"testing"
 
-	"github.com/jfuechsl/promsaint/models"
+	"github.com/engineyard/promsaint/models"
 	prometheus "github.com/prometheus/common/model"
 )
 

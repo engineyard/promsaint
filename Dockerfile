@@ -1,12 +1,12 @@
 FROM golang:1.11-alpine
 
-COPY . /go/src/github.com/jfuechsl/promsaint
+COPY . /go/src/github.com/engineyard/promsaint
 
 COPY ./run.sh /run.sh
 
 RUN go install \
-    github.com/jfuechsl/promsaint/cmd/promsaint && \
-    rm -rf /go/src
+  github.com/engineyard/promsaint/cmd/promsaint && \
+  rm -rf /go/src
 
 USER nobody
 

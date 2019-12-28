@@ -7,10 +7,10 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/jfuechsl/promsaint/backends"
-	"github.com/jfuechsl/promsaint/forwarders"
-	"github.com/jfuechsl/promsaint/models"
-	"github.com/jfuechsl/promsaint/receivers"
+	"github.com/engineyard/promsaint/backends"
+	"github.com/engineyard/promsaint/forwarders"
+	"github.com/engineyard/promsaint/models"
+	"github.com/engineyard/promsaint/receivers"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

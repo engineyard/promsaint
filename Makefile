@@ -1,4 +1,4 @@
-IMPORT_PATH := github.com/jfuechsl/promsaint
+IMPORT_PATH := github.com/engineyard/promsaint
 V := 1 # print commands and build progress by default
 IGNORED_PACKAGES := /vendor/ # space separated patterns
 

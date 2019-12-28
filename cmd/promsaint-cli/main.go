@@ -14,8 +14,8 @@ import (
 	"strings"
 
 	log "github.com/Sirupsen/logrus"
-	_ "github.com/jfuechsl/promsaint/logging"
-	"github.com/jfuechsl/promsaint/models"
+	_ "github.com/engineyard/promsaint/logging"
+	"github.com/engineyard/promsaint/models"
 )
 
 var (

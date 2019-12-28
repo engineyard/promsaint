@@ -12,7 +12,7 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
-	_ "github.com/jfuechsl/promsaint/logging"
+	_ "github.com/engineyard/promsaint/logging"
 	prometheus "github.com/prometheus/common/model"
 	"github.com/satori/go.uuid"
 )

@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 
-	_ "github.com/jfuechsl/promsaint/logging"
-	"github.com/jfuechsl/promsaint/server"
+	_ "github.com/engineyard/promsaint/logging"
+	"github.com/engineyard/promsaint/server"
 	log "github.com/Sirupsen/logrus"
 )
 

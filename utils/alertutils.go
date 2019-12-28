@@ -8,7 +8,7 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/jfuechsl/promsaint/models"
+	"github.com/engineyard/promsaint/models"
 	prometheus "github.com/prometheus/common/model"
 )
 
